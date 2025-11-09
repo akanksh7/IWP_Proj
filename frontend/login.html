@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MoodMeal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">🍽️ MoodMeal</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="add-recipe.html">Add Recipe</a></li>
+                <li><a href="favourites.html">Favorites</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container" style="max-width: 500px; margin: 2rem auto;">
+            <h1>Welcome to MoodMeal</h1>
+            <p>Login or create an account to save your favorite recipes!</p>
+            
+            <div id="user-info" style="display: none; text-align: center; margin-bottom: 2rem;">
+                <h2>Welcome back, <span id="username"></span>!</h2>
+                <button onclick="logout()" class="btn">Logout</button>
+                <a href="index.html" class="btn btn-secondary">Go to Recipes</a>
+            </div>
+            
+            <div id="auth-forms">
+                <div id="login-form" style="margin-bottom: 2rem;">
+                    <h2>Login</h2>
+                    <form id="login-form-element">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" name="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" name="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn">Login</button>
+                    </form>
+                </div>
+
+                <div style="text-align: center; margin-top: 1rem;">
+                    <p>Don't have an account? <a href="register.html" class="btn btn-small" style="display:inline-block; margin-left:0.5rem; padding:0.4rem 0.8rem;">Create account</a></p>
+                </div>
+            </div>
+            
+            <!-- <div style="text-align: center; margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                <p><strong>Test Accounts:</strong> You can create a new account or use the demo functionality. Passwords are securely hashed!</p>
+            </div> -->
+        </div>
+    </main>
+
+    <script>
+        // Check if user is already logged in
+        async function checkLoginStatus() {
+            try {
+                const response = await fetch('../backend/api/user-auth.php?action=check');
+                const data = await response.json();
+                
+                if (data.logged_in) {
+                    document.getElementById('username').textContent = data.user.username;
+                    document.getElementById('user-info').style.display = 'block';
+                    document.getElementById('auth-forms').style.display = 'none';
+                }
+            } catch (error) {
+                console.log('Not logged in');
+            }
+        }
+        
+        // Login function
+        async function login(formData) {
+            try {
+                formData.append('action', 'login');
+                const response = await fetch('../backend/api/user-auth.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(data.message);
+                    checkLoginStatus(); // Refresh the UI
+                } else {
+                    alert(data.error || 'Login failed');
+                }
+            } catch (error) {
+                alert('Login error: ' + error.message);
+            }
+        }
+        
+        // Register function
+        async function register(formData) {
+            try {
+                formData.append('action', 'register');
+                const response = await fetch('../backend/api/user-auth.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(data.message);
+                    checkLoginStatus(); // Refresh the UI
+                } else {
+                    alert(data.error || 'Registration failed');
+                }
+            } catch (error) {
+                alert('Registration error: ' + error.message);
+            }
+        }
+        
+        // Logout function
+        async function logout() {
+            try {
+                const response = await fetch('../backend/api/user-auth.php?action=logout');
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(data.message);
+                    location.reload(); // Refresh the page
+                }
+            } catch (error) {
+                alert('Logout error: ' + error.message);
+            }
+        }
+        
+        // Form event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            
+            document.getElementById('login-form-element').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                login(formData);
+            });
+            
+            document.getElementById('register-form-element').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                register(formData);
+            });
+        });
+    </script>
+</body>
+</html>

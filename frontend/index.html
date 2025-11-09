@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodMeal - Mood-Based Recipe Recommendations</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">🍽️ MoodMeal</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="add-recipe.html">Add Recipe</a></li>
+                <li><a href="favourites.html">Favorites</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="hero">
+            <h1>What's Your Mood?</h1>
+            <p>Discover delicious recipes that match how you're feeling right now!</p>
+            <button id="load-all-recipes" class="btn">Browse All Recipes</button>
+        </div>
+
+        <div class="container">
+            <h2>Select Your Mood</h2>
+            <div id="mood-selector" class="mood-selector">
+                <!-- Moods will be loaded here by JavaScript -->
+            </div>
+        </div>
+
+        <div id="recipes-container">
+            <!-- Recipes will be loaded here by JavaScript -->
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

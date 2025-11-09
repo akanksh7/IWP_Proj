@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Recipe - MoodMeal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">🍽️ MoodMeal</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="add-recipe.html">Add Recipe</a></li>
+                <li><a href="favourites.html">Favorites</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Share Your Recipe</h1>
+            <p>Add a new recipe and tag it with a mood to help others discover it!</p>
+            
+            <form id="add-recipe-form">
+                <div class="form-group">
+                    <label for="title">Recipe Title *</label>
+                    <input type="text" id="title" name="title" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" class="form-control" rows="3" placeholder="Briefly describe your recipe..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="ingredients">Ingredients * (one per line)</label>
+                    <textarea id="ingredients" name="ingredients" class="form-control" rows="6" required placeholder="2 cups flour&#10;1 cup sugar&#10;3 eggs&#10;..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="instructions">Instructions * (one step per line)</label>
+                    <textarea id="instructions" name="instructions" class="form-control" rows="8" required placeholder="Preheat oven to 350°F&#10;Mix dry ingredients in a bowl&#10;Add wet ingredients and stir&#10;..."></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="prep_time">Prep Time (minutes)</label>
+                        <input type="number" id="prep_time" name="prep_time" class="form-control" min="0" value="15">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cook_time">Cook Time (minutes)</label>
+                        <input type="number" id="cook_time" name="cook_time" class="form-control" min="0" value="30">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="servings">Servings</label>
+                        <input type="number" id="servings" name="servings" class="form-control" min="1" value="4">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="mood_id">Mood Tag</label>
+                    <select id="mood_id" name="mood_id" class="form-control">
+                        <option value="">Select a mood...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="image_url">Image URL (optional)</label>
+                    <input type="url" id="image_url" name="image_url" class="form-control" placeholder="https://example.com/image.jpg">
+                </div>
+
+                <button type="submit" class="btn">🍳 Add Recipe</button>
+                <a href="index.html" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Load moods for the dropdown
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('../backend/api/get-moods.php');
+                const moods = await response.json();
+                
+                const select = document.getElementById('mood_id');
+                moods.forEach(mood => {
+                    const option = document.createElement('option');
+                    option.value = mood.id;
+                    option.textContent = mood.name;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading moods:', error);
+            }
+        });
+    </script>
+</body>
+</html>

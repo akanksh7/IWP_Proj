@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Recipes - MoodMeal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">🍽️ MoodMeal</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="add-recipe.html">Add Recipe</a></li>
+                <li><a href="favourites.html">Favorites</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>🔍 Search Recipes</h1>
+            <p>Find the perfect recipe by name or ingredients!</p>
+            
+            <div class="form-group">
+                <input type="text" id="search-input" class="form-control" placeholder="Search recipes by title or ingredients..." style="font-size: 1.1rem; padding: 1rem;">
+                <button id="search-btn" class="btn" style="margin-top: 1rem;">Search</button>
+            </div>
+        </div>
+
+        <div id="recipes-container">
+            <!-- Search results will be loaded here -->
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-btn');
+            
+            const performSearch = async () => {
+                const query = searchInput.value.trim();
+                if (!query) {
+                    app.loadRecipes(); // Load all recipes if empty search
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`../backend/api/search-recipes.php?q=${encodeURIComponent(query)}`);
+                    const recipes = await response.json();
+                    
+                    app.recipes = recipes;
+                    app.renderRecipes();
+                } catch (error) {
+                    console.error('Search error:', error);
+                    app.showMessage('Search failed. Please try again.', 'error');
+                }
+            };
+            
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // Load all recipes initially
+            app.loadRecipes();
+        });
+    </script>
+</body>
+</html>

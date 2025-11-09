@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Favorites - MoodMeal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">🍽️ MoodMeal</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="add-recipe.html">Add Recipe</a></li>
+                <li><a href="favourites.html">Favorites</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="favorites-page">
+        <div class="hero">
+            <h1>💖 Your Favorite Recipes</h1>
+            <p>These are sample favorites pre-selected for demo. You can remove them locally.</p>
+        </div>
+
+        <div id="recipes-container">
+            <div class="container">
+                <div class="recipes-grid">
+                    <div class="recipe-card">
+                        <div class="recipe-image">🍽️</div>
+                        <div class="recipe-content">
+                            <h3 class="recipe-title">Sunrise Pancakes</h3>
+                            <p class="recipe-description">Fluffy pancakes with a citrus twist — perfect to start the day.</p>
+                            <div class="recipe-meta">
+                                <span>⏱️ 25 min</span>
+                                <span>🍽️ 4 servings</span>
+                            </div>
+                            <span class="mood-tag" style="background-color:#FFD700">Happy</span>
+                            <div style="margin-top: 1rem;">
+                                <button onclick="window.location.href='recipe-details.html?id=1'" class="btn btn-small">View Recipe</button>
+                                <button onclick="removeCard(this)" class="btn btn-danger btn-small">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recipe-card">
+                        <div class="recipe-image">🍽️</div>
+                        <div class="recipe-content">
+                            <h3 class="recipe-title">Cozy Mac & Cheese</h3>
+                            <p class="recipe-description">Rich, creamy mac and cheese for comfort evenings.</p>
+                            <div class="recipe-meta">
+                                <span>⏱️ 45 min</span>
+                                <span>🍽️ 6 servings</span>
+                            </div>
+                            <span class="mood-tag" style="background-color:#87CEEB">Sad</span>
+                            <div style="margin-top: 1rem;">
+                                <button onclick="window.location.href='recipe-details.html?id=2'" class="btn btn-small">View Recipe</button>
+                                <button onclick="removeCard(this)" class="btn btn-danger btn-small">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recipe-card">
+                        <div class="recipe-image">🍽️</div>
+                        <div class="recipe-content">
+                            <h3 class="recipe-title">Energy Quinoa Bowl</h3>
+                            <p class="recipe-description">Protein-packed quinoa bowl to fuel your day.</p>
+                            <div class="recipe-meta">
+                                <span>⏱️ 30 min</span>
+                                <span>🍽️ 2 servings</span>
+                            </div>
+                            <span class="mood-tag" style="background-color:#FF6347">Energetic</span>
+                            <div style="margin-top: 1rem;">
+                                <button onclick="window.location.href='recipe-details.html?id=3'" class="btn btn-small">View Recipe</button>
+                                <button onclick="removeCard(this)" class="btn btn-danger btn-small">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
